@@ -19,7 +19,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     if @task.save
       flash[:notice] = 'Task was successfully created.'
-      redirect_to @task  # Goes to show: title "Show Task Page" (set in view)
+      redirect_to tasks_url
     else
       render :new
     end
@@ -43,7 +43,6 @@ class TasksController < ApplicationController
   end
 
   private
-
   def task_params
     params.require(:task).permit(:title, :content)
   end
