@@ -14,11 +14,17 @@
   <div>
     <%= form.label :title, "Title Title", id: "title-label" %>
     <%= form.text_field :title %>
+    <% if @task.errors[:title].any? %>
+      <span class="field-error"><%= @task.errors[:title].join(', ') %></span>
+    <% end %>
   </div>
 
   <div>
     <%= form.label :content, "Content", id: "content-label" %>
     <%= form.text_area :content %>
+    <% if @task.errors[:content].any? %>
+      <span class="field-error"><%= @task.errors[:content].join(', ') %></span>
+    <% end %>
   </div>
 
   <div>
