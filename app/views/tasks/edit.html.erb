@@ -13,12 +13,18 @@
 
   <div>
     <%= form.label :title, "Title Title", id: "title-label" %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, id: "task_title" %>
+    <% @task.errors[:title].each do |error| %>
+      <span class="field-error"><%= error %></span>
+    <% end %>
   </div>
 
   <div>
     <%= form.label :content, "Content", id: "content-label" %>
-    <%= form.text_area :content %>
+    <%= form.text_area :content, id: "task_content" %>
+    <% @task.errors[:content].each do |error| %>
+      <span class="field-error"><%= error %></span>
+    <% end %>
   </div>
 
   <div>

@@ -16,22 +16,22 @@ class TasksController < ApplicationController
   end
 
   def create
-  @task = Task.new(task_params)
-  if @task.save
-    flash[:notice] = 'Task was successfully created.'
-    redirect_to tasks_path
-  else
-    render :new, status: :unprocessable_entity
+    @task = Task.new(task_params)
+    if @task.save
+      flash[:notice] = 'Task was successfully created.'
+      redirect_to tasks_url  # To index ("Tasks Index Page")
+    else
+      render :new, status: :unprocessable_entity  # Stays on new ("New Task Page") with errors
+    end
   end
-end
 
   def update
     @task = Task.find(params[:id])
     if @task.update(task_params)
       flash[:notice] = 'Task was successfully updated.'
-      redirect_to tasks_path(@task) 
+      redirect_to @task  # To show ("Show Task Page")
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity  # Stays on edit ("Edit Task Page")
     end
   end
 

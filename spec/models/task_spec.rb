@@ -6,7 +6,7 @@ RSpec.describe Task, type: :model do
       it 'Validation fails' do
         task = Task.create(title: '', content: 'Create a proposal.')
         expect(task).not_to be_valid
-        expect(task.errors[:title]).to include("cannot be blank")
+        expect(task.errors[:title]).to include("can't be blank")
       end
     end
 
@@ -14,7 +14,7 @@ RSpec.describe Task, type: :model do
       it 'Validation fails' do
         task = Task.create(title: 'Test Title', content: '')
         expect(task).not_to be_valid
-        expect(task.errors[:content]).to include("cannot be blank")
+        expect(task.errors[:content]).to include("can't be blank")
       end
     end
 
