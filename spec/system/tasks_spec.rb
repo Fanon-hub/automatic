@@ -70,4 +70,17 @@ RSpec.describe 'Task management function', type: :system do
       end
     end
   end
+  describe 'Edit function' do
+  context 'When validation fails during editing' do
+    it 'Displays both errors if title and content empty' do
+      task = FactoryBot.create(:task)
+      visit edit_task_path(task)
+      fill_in 'task_title', with: ''
+      fill_in 'task_content', with: ''
+      click_button 'Update Task'
+      expect(page).to have_content "Title can't be blank"
+      expect(page).to have_content "Content can't be blank"
+      expect(page).to have_current_path edit_task_path(task)
+    end
+  end
 end
