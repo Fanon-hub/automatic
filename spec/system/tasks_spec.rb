@@ -8,8 +8,41 @@ RSpec.describe 'Task management function', type: :system do
         fill_in 'Title Title', with: 'Test Title'
         fill_in 'Content', with: 'Test Content'
         click_button 'Create Task'
-        expect(page).to have_content 'Test Title'
-        expect(page).to have_content 'Task was successfully created.'
+        expect(page).to have_content 'Test Title'  # Task in list
+        expect(page).to have_content 'Task was successfully created.'  # Flash
+        expect(page).to have_current_path tasks_path  # Redirect to index
+      end
+    end
+
+    context 'When validation fails during registration' do
+      it 'Displays title error if title empty (content filled)' do
+        visit new_task_path
+        fill_in 'Title Title', with: ''  # Explicitly blank
+        fill_in 'Content', with: 'Valid content'
+        click_button 'Create Task'
+        expect(page).to have_content "Title can't be blank"
+        expect(page).not_to have_content "Content can't be blank"
+        expect(page).to have_current_path new_task_path  # Stays on new
+      end
+
+      it 'Displays content error if content empty (title filled)' do
+        visit new_task_path
+        fill_in 'Title Title', with: 'Valid title'
+        fill_in 'Content', with: ''  # Explicitly blank
+        click_button 'Create Task'
+        expect(page).to have_content "Content can't be blank"
+        expect(page).not_to have_content "Title can't be blank"
+        expect(page).to have_current_path new_task_path
+      end
+
+      it 'Displays both errors if title and content empty' do
+        visit new_task_path
+        fill_in 'Title Title', with: ''  # Explicitly blank
+        fill_in 'Content', with: ''  # Explicitly blank
+        click_button 'Create Task'
+        expect(page).to have_content "Title can't be blank"
+        expect(page).to have_content "Content can't be blank"
+        expect(page).to have_current_path new_task_path
       end
     end
   end

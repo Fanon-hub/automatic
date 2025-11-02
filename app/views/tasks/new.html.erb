@@ -3,6 +3,7 @@
 <%= form_with model: @task, local: true do |form| %>
   <% if @task.errors.any? %>
     <div id="error_explanation">
+      <h3>Please fix the errors below:</h3>  
       <ul>
         <% @task.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -12,24 +13,24 @@
   <% end %>
 
   <div>
-    <%= form.label :title, "Title Title", id: "title-label" %>
+    <%= form.label :title, "Title" %><br>
     <%= form.text_field :title %>
-    <% if @task.errors[:title].any? %>
-      <span class="field-error"><%= @task.errors[:title].join(', ') %></span>
+    <% @task.errors[:title].each do |error| %>
+      <span class="field-error"><%= "Title #{error}" %></span>
     <% end %>
   </div>
 
   <div>
-    <%= form.label :content, "Content", id: "content-label" %>
+    <%= form.label :content, "Content" %><br>
     <%= form.text_area :content %>
-    <% if @task.errors[:content].any? %>
-      <span class="field-error"><%= @task.errors[:content].join(', ') %></span>
+    <% @task.errors[:content].each do |error| %>
+      <span class="field-error"><%= "Content #{error}" %></span>
     <% end %>
   </div>
 
   <div>
-    <%= form.submit "Create Task", id: "create-task" %>
+    <%= form.submit "Create Task" %>
   </div>
 <% end %>
 
-<%= link_to "Back", tasks_path, id: "back" %>
+<%= link_to "Back", tasks_path %>
