@@ -12,7 +12,7 @@
   <% end %>
 
   <div>
-    <%= form.label :title, t(:title_label), id: "title-label" %>
+    <%= form.label :title, t(:title_label) %>
     <%= form.text_field :title, id: "task_title" %>
     <% @task.errors[:title].each do |error| %>
       <span class="field-error"><%= error %></span>
@@ -20,7 +20,7 @@
   </div>
 
   <div>
-    <%= form.label :content, t(:content_label), id: "content-label" %>
+    <%= form.label :content, t(:content_label) %>
     <%= form.text_area :content, id: "task_content" %>
     <% @task.errors[:content].each do |error| %>
       <span class="field-error"><%= error %></span>
@@ -28,8 +28,8 @@
   </div>
 
   <div>
-    <%= form.submit t(:update_task), id: "update-task" %>
+    <%= form.submit t(:update_task) %>
   </div>
 <% end %>
 
-<%= link_to t(:back), @task, id: "back" %>
+<%= link_to t(:back), @task, class: 'back' %>

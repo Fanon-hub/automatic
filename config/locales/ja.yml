@@ -1,5 +1,5 @@
 ja:
-  # Global navigation
+  # Global nav
   tasks_index: "タスクリスト"
   new_task: "タスク登録"
 
@@ -16,30 +16,37 @@ ja:
       destroy: "削除"
       confirm: "本当に削除しますか？"
 
-  # Task registration screen
+  # Task registration/new screen
   new_task_page: "タスク登録ページ"
   title_label: "タイトル"
   content_label: "内容"
   create_task: "登録"
   back: "戻る"
 
-  # Task details screen
+  # Task details/show screen
   show_task_page: "タスク詳細ページ"
   title_item: "タイトル"
   content_item: "内容"
   created_at_item: "作成日時"
+  tasks:
+    show:
+      edit: "編集"
+      back: "戻る"
 
   # Task edit screen
   edit_task_page: "タスク編集ページ"
   update_task: "更新"
+  tasks:
+    edit:
+      back: "戻る"
 
-  # Validation messages (under activerecord)
+  # Validation (activerecord for auto-handling)
   activerecord:
     errors:
       models:
-        task: 
+        task:
           attributes:
-            title: 
+            title:
               blank: "タイトルを入力してください"
             content:
               blank: "内容を入力してください"
@@ -59,8 +66,4 @@ ja:
       update:
         notice: "タスクを更新しました"
       destroy:
-        notice: "タスクを削除しました"
-
-  time:
-    formats:
-      short: "%Y/%m/%d %H:%M"
+        notice: "タスクを削除しました" 
