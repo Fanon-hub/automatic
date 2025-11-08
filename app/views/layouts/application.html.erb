@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CdpWebManyoTask</title>
+    <title><%= t(:app_title, default: 'CdpWebManyoTask') %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -14,10 +13,16 @@
 
 <body>
   <nav id="global-nav">
-    <%= link_to "Tasks Index", tasks_path, id: "tasks-index" %>
-    <%= link_to "New Task", new_task_path, id: "new-task" %>
+    <%= link_to t(:tasks_index), tasks_path %>   
+    <%= link_to t(:new_task), new_task_path %> 
   </nav>
-  <p class="notice"><%= notice %></p>  # Displays flash on any page
+  
+  <% if notice %>
+    <div class="alert alert-info"><%= t("flash.#{controller_name}.#{action_name}.notice", default: notice) %></div>
+  <% elsif alert %>
+    <div class="alert alert-danger"><%= t("flash.#{controller_name}.#{action_name}.alert", default: alert) %></div>
+  <% end %>
+  
   <%= yield %>
 </body>
 </html>

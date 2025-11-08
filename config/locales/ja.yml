@@ -1,0 +1,66 @@
+ja:
+  # Global navigation
+  tasks_index: "タスクリスト"
+  new_task: "タスク登録"
+
+  # Task list screen
+  tasks:
+    index:
+      title: "タスクリストページ"
+      headers:
+        title: "タイトル"
+        content: "内容"
+        created_at: "作成日時"
+      show: "詳細"
+      edit: "編集"
+      destroy: "削除"
+      confirm: "本当に削除しますか？"
+
+  # Task registration screen
+  new_task_page: "タスク登録ページ"
+  title_label: "タイトル"
+  content_label: "内容"
+  create_task: "登録"
+  back: "戻る"
+
+  # Task details screen
+  show_task_page: "タスク詳細ページ"
+  title_item: "タイトル"
+  content_item: "内容"
+  created_at_item: "作成日時"
+
+  # Task edit screen
+  edit_task_page: "タスク編集ページ"
+  update_task: "更新"
+
+  # Validation messages (under activerecord)
+  activerecord:
+    errors:
+      models:
+        task: 
+          attributes:
+            title: 
+              blank: "タイトルを入力してください"
+            content:
+              blank: "内容を入力してください"
+    models:
+      task: "タスク"
+    attributes:
+      task:
+        title: "タイトル"
+        content: "内容"
+        created_at: "作成日時"
+
+  # Flash messages
+  flash:
+    tasks:
+      create:
+        notice: "タスクを登録しました"
+      update:
+        notice: "タスクを更新しました"
+      destroy:
+        notice: "タスクを削除しました"
+
+  time:
+    formats:
+      short: "%Y/%m/%d %H:%M"

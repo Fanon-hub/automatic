@@ -1,4 +1,4 @@
-<h1>Edit Task Page</h1>
+<h1><%= t(:edit_task_page) %></h1>
 
 <%= form_with model: @task, local: true do |form| %>
   <% if @task.errors.any? %>
@@ -12,7 +12,7 @@
   <% end %>
 
   <div>
-    <%= form.label :title, "Title Title", id: "title-label" %>
+    <%= form.label :title, t(:title_label), id: "title-label" %>
     <%= form.text_field :title, id: "task_title" %>
     <% @task.errors[:title].each do |error| %>
       <span class="field-error"><%= error %></span>
@@ -20,7 +20,7 @@
   </div>
 
   <div>
-    <%= form.label :content, "Content", id: "content-label" %>
+    <%= form.label :content, t(:content_label), id: "content-label" %>
     <%= form.text_area :content, id: "task_content" %>
     <% @task.errors[:content].each do |error| %>
       <span class="field-error"><%= error %></span>
@@ -28,8 +28,8 @@
   </div>
 
   <div>
-    <%= form.submit "Update Task", id: "update-task" %>
+    <%= form.submit t(:update_task), id: "update-task" %>
   </div>
 <% end %>
 
-<%= link_to "Back", tasks_path, id: "back" %>
+<%= link_to t(:back), @task, id: "back" %>
