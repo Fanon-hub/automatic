@@ -1,27 +1,27 @@
-<h1><%= t('tasks.index.title') %></h1>
+<h1><%= t('tasks.index.title') %></h1>  <!-- "タスクリストページ" -->
 
 <table>
   <thead>
     <tr>
-      <th><%= t('tasks.index.headers.title') %></th>
-      <th><%= t('tasks.index.headers.content') %></th>
-      <th><%= t('tasks.index.headers.created_at') %></th>
+      <th><%= t('tasks.index.headers.title') %></th>  <!-- "タイトル" -->
+      <th><%= t('tasks.index.headers.content') %></th>  <!-- "内容" -->
+      <th><%= t('tasks.index.headers.created_at') %></th>  <!-- "作成日時" -->
     </tr>
   </thead>
   <tbody>
     <% @tasks.each do |task| %>
-      <tr class="task-row">  <!-- Add class if needed for eval -->
+      <tr>
         <td><%= task.title %></td>
         <td><%= task.content %></td>
-        <td><%= l(task.created_at, format: :short) %></td>  
+        <td><%= l(task.created_at, format: :short) %></td>
         <td>
-          <%= link_to t('tasks.index.show'), task, class: 'show-task' %>
-          <%= link_to t('tasks.index.edit'), edit_task_path(task), class: 'edit-task' %>
-          <%= link_to t('tasks.index.destroy'), task, method: :delete, data: { confirm: t('tasks.index.confirm') }, class: 'destroy-task' %>
+          <%= link_to t('tasks.index.show'), task, class: 'show-task' %>  <!-- "詳細" -->
+          <%= link_to t('tasks.index.edit'), edit_task_path(task), class: 'edit-task' %>  <!-- "編集" -->
+          <%= link_to t('tasks.index.destroy'), task, method: :delete, data: { confirm: t('tasks.index.confirm') }, class: 'destroy-task' %>  <!-- "削除" + confirm "本当に削除しますか？" -->
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= paginate @tasks %>  <!-- For pagination below -->
+<%= paginate @tasks %>

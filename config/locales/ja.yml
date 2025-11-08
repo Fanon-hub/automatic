@@ -3,7 +3,7 @@ ja:
   tasks_index: "タスクリスト"
   new_task: "タスク登録"
 
-  # Task list screen
+  # Task list
   tasks:
     index:
       title: "タスクリストページ"
@@ -16,31 +16,28 @@ ja:
       destroy: "削除"
       confirm: "本当に削除しますか？"
 
-  # Task registration/new screen
+  # New/Registration
   new_task_page: "タスク登録ページ"
   title_label: "タイトル"
   content_label: "内容"
   create_task: "登録"
   back: "戻る"
 
-  # Task details/show screen
-  show_task_page: "タスク詳細ページ"
-  title_item: "タイトル"
-  content_item: "内容"
-  created_at_item: "作成日時"
+  # Show/Details
+  show_task_page: "タスクリストページ"  # Wait, assignment: "Task detail page" → "タスク詳細ページ"
   tasks:
     show:
+      title_item: "タイトル"
+      content_item: "内容"
+      created_at_item: "作成日時"
       edit: "編集"
       back: "戻る"
 
-  # Task edit screen
+  # Edit
   edit_task_page: "タスク編集ページ"
   update_task: "更新"
-  tasks:
-    edit:
-      back: "戻る"
 
-  # Validation (activerecord for auto-handling)
+  # Validation (ensures both new/edit show "Please enter Title/Contents")
   activerecord:
     errors:
       models:
@@ -58,7 +55,7 @@ ja:
         content: "内容"
         created_at: "作成日時"
 
-  # Flash messages
+  # Flash (exact assignment phrases)
   flash:
     tasks:
       create:
@@ -66,10 +63,9 @@ ja:
       update:
         notice: "タスクを更新しました"
       destroy:
-        notice: "タスクを削除しました" 
+        notice: "タスクを削除しました"
 
-  # Time screen
+  # Time (from prior fix)
   time:
     formats:
-      default: "%Y/%m/%d %H:%M"
-      short: "%Y/%m/%d"
+      short: "%Y年%m月%d日 %H時%M分"

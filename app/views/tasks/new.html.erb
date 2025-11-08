@@ -1,35 +1,30 @@
-<h1><%= t(:new_task_page) %></h1>
+<h1><%= t(:new_task_page) %></h1>  <!-- "タスク登録ページ" -->
 
 <%= form_with model: @task, local: true do |form| %>
   <% if @task.errors.any? %>
     <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
       <ul>
         <% @task.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
+          <li><%= msg %></li>  <!-- Auto: "タイトルを入力してください" -->
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, t(:title_label) %>
-    <%= form.text_field :title, id: "task_title" %>
-    <% @task.errors[:title].each do |error| %>
-      <span class="field-error"><%= error %></span>
-    <% end %>
+  <div class="field">
+    <%= form.label :title, t(:title_label) %>  <!-- "タイトル" -->
+    <%= form.text_field :title %>
   </div>
 
-  <div>
-    <%= form.label :content, t(:content_label) %>
-    <%= form.text_area :content, id: "task_content" %>
-    <% @task.errors[:content].each do |error| %>
-      <span class="field-error"><%= error %></span>
-    <% end %>
+  <div class="field">
+    <%= form.label :content, t(:content_label) %>  <!-- "内容" -->
+    <%= form.text_area :content %>
   </div>
 
-  <div>
-    <%= form.submit t(:create_task) %>
+  <div class="actions">
+    <%= form.submit t(:create_task) %>  <!-- "登録" -->
   </div>
 <% end %>
 
-<%= link_to t(:back), tasks_path %>
+<%= link_to t(:back), tasks_path %>  <!-- "戻る" -->
