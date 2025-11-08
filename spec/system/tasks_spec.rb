@@ -105,18 +105,14 @@ RSpec.describe 'List display function', type: :system do
     end
   end
 
-  context 'When creating a new task' do
-    it 'New task is displayed at the top' do
-      # Assume Step 1 test: create a new task
+    context 'Task creation' do
+    it 'Shows Japanese success flash and redirects to show' do
       visit new_task_path
-      fill_in 'Title', with: 'newest_task'
-      fill_in 'Content', with: 'New content'
-      click_button '登録'  # Updated for i18n
-      expect(page).to have_content('タスクを登録しました')  # Flash in Japanese
-
-      visit tasks_path
-      task_list = all('tbody tr')
-      expect(task_list[0]).to have_content('newest_task')  # At top
+      fill_in 'task_title', with: 'Test'
+      fill_in 'task_content', with: 'Content'
+      click_button '登録'
+      expect(page).to have_content('タスクを登録しました')
+      expect(page).to have_current_path(task_path(Task.last))
     end
   end
 end

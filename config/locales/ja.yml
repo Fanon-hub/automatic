@@ -67,3 +67,9 @@ ja:
         notice: "タスクを更新しました"
       destroy:
         notice: "タスクを削除しました" 
+
+  # Time screen
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
+      short: "%Y/%m/%d"
