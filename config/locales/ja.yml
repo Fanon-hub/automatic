@@ -1,9 +1,9 @@
 ja:
-  # Global nav
+  # Global Navigation
   tasks_index: "タスクリスト"
   new_task: "タスク登録"
 
-  # Task list
+  # Task List Screen
   tasks:
     index:
       title: "タスクリストページ"
@@ -16,15 +16,15 @@ ja:
       destroy: "削除"
       confirm: "本当に削除しますか？"
 
-  # New/Registration
+  # Task Registration Screen
   new_task_page: "タスク登録ページ"
   title_label: "タイトル"
   content_label: "内容"
   create_task: "登録"
   back: "戻る"
 
-  # Show/Details
-  show_task_page: "タスクリストページ"  # Wait, assignment: "Task detail page" → "タスク詳細ページ"
+  # Task Details Screen
+  show_task_page: "タスク詳細ページ"
   tasks:
     show:
       title_item: "タイトル"
@@ -33,11 +33,14 @@ ja:
       edit: "編集"
       back: "戻る"
 
-  # Edit
+  # Task Edit Screen
   edit_task_page: "タスク編集ページ"
   update_task: "更新"
+  tasks:
+    edit:
+      back: "戻る"
 
-  # Validation (ensures both new/edit show "Please enter Title/Contents")
+  # Validation Messages (Custom for blank errors)
   activerecord:
     errors:
       models:
@@ -55,7 +58,7 @@ ja:
         content: "内容"
         created_at: "作成日時"
 
-  # Flash (exact assignment phrases)
+  # Flash Messages
   flash:
     tasks:
       create:
@@ -65,7 +68,7 @@ ja:
       destroy:
         notice: "タスクを削除しました"
 
-  # Time (from prior fix)
+  # Time Formatting (for l() helper)
   time:
     formats:
-      short: "%Y年%m月%d日 %H時%M分"
+      short: "%Y年%m月%d日 %H時%M分" 
