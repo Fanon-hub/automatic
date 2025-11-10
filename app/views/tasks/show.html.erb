@@ -1,16 +1,11 @@
-<h1><%= t(:show_task_page) %></h1>  <!-- "タスク詳細ページ" -->
+<h1><%= t(:show_task_page) %></h1> <!-- "タスク詳細ページ" -->
 
-<div>
-  <p><strong><%= t('tasks.show.title_item') %>:</strong> <%= @task.title %></p>  <!-- "タイトル" -->
-</div>
+<p><strong><%= t('tasks.show.title_item') %>:</strong> <%= @task.title %></p> <!-- "タイトル" -->
 
-<div>
-  <p><strong><%= t('tasks.show.content_item') %>:</strong> <%= @task.content %></p>  <!-- "内容" -->
-</div>
+<p><strong><%= t('tasks.show.content_item') %>:</strong> <%= @task.content %></p> <!-- "内容" -->
 
-<div>
-  <p><strong><%= t('tasks.show.created_at_item') %>:</strong> <%= l(@task.created_at, format: :short) %></p>  <!-- "作成日時" -->
-</div>
+<p><strong><%= t('tasks.show.created_at_item') %>:</strong> <%= l(@task.created_at, format: :short) %></p> <!-- "作成日時" -->
 
-<%= link_to t('tasks.show.edit'), edit_task_path(@task) %>  <!-- "編集" -->
-<%= link_to t('tasks.show.back'), tasks_path %>  <!-- "戻る" -->
+<%= link_to t('tasks.show.edit'), edit_task_path(@task) %> <!-- "編集" -->
+
+<%= link_to t('tasks.show.back'), tasks_path %> <!-- "戻る" -->

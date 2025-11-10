@@ -40,11 +40,11 @@ ja:
     edit:
       back: "戻る"
 
-  # Validation Messages (Custom for blank errors)
+  # Validation Messages
   activerecord:
     errors:
       models:
-        task:
+        task: 
           attributes:
             title:
               blank: "タイトルを入力してください"
@@ -68,7 +68,7 @@ ja:
       destroy:
         notice: "タスクを削除しました"
 
-  # Time Formatting (for l() helper)
+  # Time Formats
   time:
     formats:
-      short: "%Y年%m月%d日 %H時%M分" 
+      short: "%Y年%m月%d日 %H時%M分"

@@ -8,15 +8,14 @@
     <%= stylesheet_link_tag "application", media: 'all' %>
     <%= javascript_include_tag 'application', defer: true %>
   </head>
-
   <body>
     <nav id="global-nav">
-      <%= link_to t(:tasks_index), tasks_path %>
-      <%= link_to t(:new_task), new_task_path %>
+      <%= link_to t(:tasks_index), tasks_path %> <!-- "タスクリスト" -->
+      <%= link_to t(:new_task), new_task_path %> <!-- "タスク登録" -->
     </nav>
     
     <% if notice %>
-      <div class="alert alert-info"><%= notice %></div>
+      <div class="alert alert-info"><%= notice %></div> <!-- Translated flash -->
     <% end %>
     <% if alert %>
       <div class="alert alert-danger"><%= alert %></div>

@@ -18,7 +18,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to @task, notice: t('flash.tasks.create.notice')  # "タスクを登録しました"
+      redirect_to @task, notice: t('flash.tasks.create.notice')
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update(task_params)
-      redirect_to @task, notice: t('flash.tasks.update.notice')  # "タスクを更新しました"
+      redirect_to @task, notice: t('flash.tasks.update.notice')
     else
       render :edit, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_path, notice: t('flash.tasks.destroy.notice')  # "タスクを削除しました"
+    redirect_to tasks_path, notice: t('flash.tasks.destroy.notice'), status: :see_other
   end
 
   private
