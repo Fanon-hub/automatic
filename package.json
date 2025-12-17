@@ -19,6 +19,6 @@
     "yarn": "1.22.x"
   },
   "scripts": {
-    "heroku-postbuild": "RAILS_ENV=production bundle exec rails assets:precompile"
+    
   }
 }
