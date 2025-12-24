@@ -77,3 +77,15 @@ ja:
     messages:
       blank_title: "タイトルを入力してください"
       blank_content: "内容を入力してください" 
+
+ja:
+  enums:
+    task:
+      priority:
+        low: "低"
+        medium: "中"
+        high: "高"
+      status:
+        not_started: "未着手"
+        in_progress: "着手中"
+        completed: "完了"

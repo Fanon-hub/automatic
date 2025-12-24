@@ -1,11 +1,11 @@
-<h1><%= t(:show_task_page) %></h1> <!-- "タスク詳細ページ" -->
+<h1>タスク詳細</h1>
 
-<p><strong><%= t('tasks.show.title_item') %>:</strong> <%= @task.title %></p> <!-- "タイトル" -->
+<p><strong>タイトル:</strong> <%= @task.title %></p>
+<p><strong>内容:</strong> <%= @task.content %></p>
+<p><strong>終了期限:</strong> <%= @task.deadline_on %></p>
+<p><strong>優先度:</strong> <%= t("enums.task.priority.#{@task.priority}") %></p>
+<p><strong>ステータス:</strong> <%= t("enums.task.status.#{@task.status}") %></p>
+<p><strong>作成日時:</strong> <%= @task.created_at %></p>
 
-<p><strong><%= t('tasks.show.content_item') %>:</strong> <%= @task.content %></p> <!-- "内容" -->
-
-<p><strong><%= t('tasks.show.created_at_item') %>:</strong> <%= l(@task.created_at, format: :short) %></p> <!-- "作成日時" -->
-
-<%= link_to t('tasks.show.edit'), edit_task_path(@task) %> <!-- "編集" -->
-
-<%= link_to t('tasks.show.back'), tasks_path %> <!-- "戻る" -->
+<%= link_to '編集', edit_task_path(@task) %> |
+<%= link_to '戻る', tasks_path %>
