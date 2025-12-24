@@ -6,7 +6,7 @@ ruby '3.3.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '6.1.7.7'
 # Use postgresql as the database for Active Record
-gem 'pg', '>= 0.18', '< 2.0'
+gem 'pg', '~> 1.1'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -35,7 +35,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rexml'
   gem 'factory_bot_rails'
-  gem 'sqlite3' 
 end
 
 group :development do
