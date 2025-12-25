@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '6.1.7.7'
+gem 'rails', '~> 6.1.7' 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
 # Use Puma as the app server
@@ -27,7 +27,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'kaminari'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.2', require: false
+gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -35,6 +35,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rexml'
   gem 'factory_bot_rails'
+  gem 'debug', '>= 1.0.0'
 end
 
 group :development do
