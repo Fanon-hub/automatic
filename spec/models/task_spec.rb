@@ -81,4 +81,50 @@ RSpec.describe Task, type: :model do
       expect(tasks.third).to eq task3
     end
   end
+
+  describe 'Enum mappings' do
+    it 'has correct priority enum values' do
+      expect(Task.priorities).to include('low' => 0, 'medium' => 1, 'high' => 2)
+    end
+    it 'has correct status enum values' do
+      expect(Task.statuses).to include('not_started' => 0, 'in_progress' => 1, 'completed' => 2)
+    end
+    it 'raises error for invalid priority' do
+      task = build(:task)
+      expect { task.priority = :invalid }.to raise_error(ArgumentError)
+    end
+    it 'raises error for invalid status' do
+      task = build(:task)
+      expect { task.status = :invalid }.to raise_error(ArgumentError)
+    end
+  end
+
+  describe 'Search method' do
+    let!(:task_a) { create(:task, title: 'Alpha', status: :not_started) }
+    let!(:task_b) { create(:task, title: 'Beta', status: :in_progress) }
+    let!(:task_c) { create(:task, title: 'Gamma', status: :completed) }
+
+    it 'returns all tasks for empty params' do
+      expect(Task.search({})).to include(task_a, task_b, task_c)
+    end
+
+    it 'returns only matching title' do
+      expect(Task.search(title: 'Alpha')).to include(task_a)
+      expect(Task.search(title: 'Alpha')).not_to include(task_b, task_c)
+    end
+
+    it 'returns only matching status' do
+      expect(Task.search(status: 'in_progress')).to include(task_b)
+      expect(Task.search(status: 'in_progress')).not_to include(task_a, task_c)
+    end
+
+    it 'returns only tasks matching both title and status' do
+      expect(Task.search(title: 'Gamma', status: 'completed')).to include(task_c)
+      expect(Task.search(title: 'Gamma', status: 'completed')).not_to include(task_a, task_b)
+    end
+
+    it 'returns none for invalid status' do
+      expect(Task.search(status: 'invalid')).to be_empty
+    end
+  end
 end

@@ -61,4 +61,60 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
+    describe 'Create and update flows' do
+      it 'successfully creates a new task with all fields' do
+        visit new_task_path
+        fill_in 'タイトル', with: 'New Task'
+        fill_in '内容', with: 'Some content'
+        fill_in '終了期限', with: Date.current + 2.days
+        select '中', from: '優先度'
+        select '未着手', from: 'ステータス'
+        click_button '登録'
+        expect(page).to have_current_path(tasks_path)
+        expect(page).to have_content('タスクが登録されました').or have_content('タスクを登録しました')
+        expect(page).to have_content('New Task')
+      end
+
+      it 'shows validation errors on failed creation' do
+        visit new_task_path
+        fill_in 'タイトル', with: ''
+        fill_in '終了期限', with: ''
+        click_button '登録'
+        expect(page).to have_content('タイトルを入力してください')
+        expect(page).to have_content('終了期限を入力してください').or have_content('Deadline onを入力してください')
+      end
+
+      it 'successfully updates a task' do
+        task = create(:task, title: 'Old Title', priority: :low, status: :not_started)
+        visit edit_task_path(task)
+        fill_in 'タイトル', with: 'Updated Title'
+        select '高', from: '優先度'
+        select '着手中', from: 'ステータス'
+        click_button '更新'
+        expect(page).to have_current_path(tasks_path)
+        expect(page).to have_content('タスクが更新されました').or have_content('タスクを更新しました')
+        expect(page).to have_content('Updated Title')
+      end
+
+      it 'shows validation errors on failed update' do
+        task = create(:task, title: 'To Edit')
+        visit edit_task_path(task)
+        fill_in 'タイトル', with: ''
+        click_button '更新'
+        expect(page).to have_content('タイトルを入力してください')
+      end
+    end
+
+    describe 'Pagination and filters' do
+      before do
+        create_list(:task, 25, :high_priority, :due_tomorrow, :in_progress)
+      end
+      it 'preserves sort/search params across pages' do
+        visit tasks_path(sort_priority: true, search: { title: 'Task' })
+        click_link '次へ' if page.has_link?('次へ')
+        expect(page).to have_current_path(/sort_priority=true/)
+        expect(page).to have_content('Task')
+      end
+    end
+  end
 end

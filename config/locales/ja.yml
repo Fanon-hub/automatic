@@ -73,12 +73,11 @@ ja:
     formats:
       short: "%Y年%m月%d日 %H時%M分"
   
+ja:
   errors:
     messages:
       blank_title: "タイトルを入力してください"
       blank_content: "内容を入力してください" 
-
-ja:
   enums:
     task:
       priority:

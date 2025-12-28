@@ -15,12 +15,36 @@ FactoryBot.define do
       priority { :low }
     end
 
+    trait :not_started do
+      status { :not_started }
+    end
+
     trait :in_progress do
       status { :in_progress }
     end
 
     trait :completed do
       status { :completed }
+    end
+
+    trait :due_today do
+      deadline_on { Date.current }
+    end
+
+    trait :overdue do
+      deadline_on { Date.current - 1.day }
+    end
+
+    trait :due_tomorrow do
+      deadline_on { Date.current + 1.day }
+    end
+
+    trait :created_yesterday do
+      created_at { Time.current - 1.day }
+    end
+
+    trait :created_last_week do
+      created_at { Time.current - 1.week }
     end
   end
 end
