@@ -1,25 +1,21 @@
 {
   "name": "cdp_web_manyo_task",
   "private": true,
-  "version": "0.1.0",
+  "engines": {
+    "node": ">=14.0.0",
+    "yarn": "1.22.x"
+  },
   "dependencies": {
+    "@babel/core": "^7.28.5",
     "@babel/plugin-proposal-private-methods": "^7.18.6",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@rails/actioncable": "^6.0.0",
-    "@rails/activestorage": "^6.0.0",
-    "@rails/ujs": "^6.0.0",
+    "@rails/actioncable": "^6.1.7",
+    "@rails/activestorage": "^6.1.7",
+    "@rails/ujs": "^6.1.7",
     "@rails/webpacker": "5.4.4",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^4.2.1"
-  },
-  "engines": {
-    "node": "16.x",
-    "yarn": "1.22.x"
-  },
-  "scripts": {
+    "webpack-dev-server": "^4.9.0"
   }
 }
