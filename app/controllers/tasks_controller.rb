@@ -2,16 +2,18 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:update]
   
   def index
-    @tasks = Task.all
-    @tasks = @tasks.latest if params[:sort_created_at]
-    @tasks = @tasks.deadline_asc if params[:sort_deadline_on]
-    @tasks = @tasks.priority_desc if params[:sort_priority]
+    tasks = Task.all
+
+    # Apply scopes safely (each should return a Relation or nil → fallback to base)
+    tasks = tasks.latest          if params[:sort_created_at].present?
+    tasks = tasks.deadline_asc    if params[:sort_deadline_on].present?
+    tasks = tasks.priority_desc   if params[:sort_priority].present?
     
     if params[:search].present?
-      @tasks = @tasks.search(params[:search])
+      tasks = tasks.search(params[:search])
     end
-    
-    @tasks = @tasks.page(params[:page])
+
+    @tasks = tasks.page(params[:page])
   end
   
   def new
