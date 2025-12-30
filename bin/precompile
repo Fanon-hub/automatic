@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Skip asset precompilation
+echo "Skipping asset precompilation"
+exit 0
