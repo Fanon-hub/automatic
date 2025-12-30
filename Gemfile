@@ -3,55 +3,56 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.3.0'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Rails 7.2.0 (exact version as you specified)
 gem 'rails', '7.2.0'
-# Use postgresql as the database for Active Record
+
+# Database
 gem 'pg', '>= 0.18', '< 2.0'
-# Use Puma as the app server
-gem 'puma', '~> 4.1'
-# Use SCSS for stylesheets
-gem 'sass-rails', '>= 6'
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-# gem 'webpacker', '~> 5.0'
-gem 'jsbundling-rails'         # For JS bundling (esbuild etc.)
-gem 'cssbundling-rails'        # Optional but recommended if you use Sass/Tailwind/PostCSS
-gem 'propshaft'                # Modern asset pipeline (faster, simpler than Sprockets)
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+
+# Web server
+gem 'puma', '~> 6.4'  # Updated from 4.1 → modern secure version (Puma 4.x is EOL)
+
+# Modern asset pipeline (replaces Sprockets/Webpacker)
+gem 'propshaft'                # Handles fingerprinting & asset serving
+gem 'jsbundling-rails'         # For JS bundling (esbuild, rollup, webpack, bun)
+gem 'cssbundling-rails'        # For CSS processing (Tailwind, Sass, PostCSS, Bootstrap, etc.)
+
+# Turbolinks (still works, but consider migrating to Turbo if possible)
+gem 'turbolinks', '~> 5.2'
+
+# JSON builder
 gem 'jbuilder', '~> 2.7'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+
+gem 'kaminari'
+
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.20'
 
-# Use Active Storage variant
+# Use Active Storage variants [optional]
 # gem 'image_processing', '~> 1.2'
 
-# Reduces boot times through caching; required in config/boot.rb
+# Reduces boot times through caching
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
 group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.2'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  # Better errors & console
+  gem 'web-console', '>= 4.2'
+  gem 'listen', '~> 3.9'
+  # Spring no longer needed in modern Rails (can remove)
+  # gem 'spring'
+  # gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 group :test do
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
+  # System testing
+  gem 'capybara', '>= 3.39'
   gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+# Windows compatibility
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
