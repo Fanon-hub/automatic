@@ -8,6 +8,10 @@
   <div>
     <%= f.label :status, "ステータス" %>
     <%= f.select :status, Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, include_blank: true %>
+    </div>
+    <div>
+      <%= f.label :priority, "優先度" %>
+      <%= f.select :priority, Task.priorities.keys.map { |k| [t("enums.task.priority.#{k}"), k] }, include_blank: true %>
   </div>
   <%= f.submit "検索", id: "search_task" %>
 <% end %>

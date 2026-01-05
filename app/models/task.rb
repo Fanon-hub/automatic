@@ -17,11 +17,13 @@ class Task < ApplicationRecord
   # Scopes for searching
   scope :search_title, ->(title) { where('title LIKE ?', "%#{title}%") }
   scope :search_status, ->(status) { where(status: status) }
+  scope :search_priority, ->(priority) { where(priority: priority) }
 
   def self.search(params)
     tasks = all
     tasks = tasks.search_title(params[:title]) if params[:title].present?
     tasks = tasks.search_status(params[:status]) if params[:status].present?
+    tasks = tasks.search_priority(params[:priority]) if params[:priority].present?
     tasks
   end
 
