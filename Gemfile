@@ -27,7 +27,7 @@ gem 'importmap-rails'
 gem 'kaminari'
 
 # Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.20'
+gem 'bcrypt', '~> 3.1.20'
 
 # Use Active Storage variants [optional]
 # gem 'image_processing', '~> 1.2'
