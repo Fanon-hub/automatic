@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:update]
+  before_action :login_required
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user_task, only: [:show, :edit, :update, :destroy]
   
   def index
     tasks = Task.all
@@ -13,15 +15,18 @@ class TasksController < ApplicationController
       tasks = tasks.search(params[:search])
     end
 
-    @tasks = tasks.page(params[:page])
+    @tasks = current_user.tasks.order(created_at: :desc).page(params[:page])
   end
   
   def new
-    @task = Task.new
+    @task = current_user.tasks.new 
   end
   
+  def show
+  end
+
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params) 
     if @task.save
       redirect_to tasks_path, notice: 'タスクが登録されました'
     else
@@ -29,6 +34,9 @@ class TasksController < ApplicationController
     end
   end
   
+  def edit
+  end
+
   def update
     if @task.update(task_params)
       redirect_to tasks_path, notice: 'タスクが更新されました'
@@ -36,14 +44,24 @@ class TasksController < ApplicationController
       render :edit
     end
   end
-  
-  private
-  
-  def task_params
-    params.require(:task).permit(:title, :content, :deadline_on, :priority, :status)
+
+  def destroy 
+    @task.destroy
+    redirect_to tasks_path, notice: 'タスクが削除されました'
   end
   
+  private
+
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def correct_user_task
+    unless current_user == @task.user
+      redirect_to tasks_path, alert: 'アクセス権限がありません'
+    end
+  end
+  def task_params
+    params.require(:task).permit(:title, :content)
   end
 end

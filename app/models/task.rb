@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+  belongs_to :user
   validates :title, presence: true
   validates :deadline_on, presence: true
   validates :priority, presence: true
