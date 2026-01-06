@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :login_required, only: [:new, :create]
+  skip_before_action :login_required, only: [:new, :create], raise: false 
   before_action :logout_required, only: [:new, :create]
   
   def new
@@ -21,4 +21,4 @@ class SessionsController < ApplicationController
     session.delete(:user_id)
     redirect_to new_session_path, notice: 'ログアウトしました'
   end
-end
+end 
