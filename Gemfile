@@ -14,14 +14,15 @@ gem 'puma', '~> 6.4'  # Updated from 4.1 → modern secure version (Puma 4.x is 
 
 # Modern asset pipeline (replaces Sprockets/Webpacker)
 gem 'propshaft'                # Handles fingerprinting & asset serving
-gem 'jsbundling-rails'         # For JS bundling (esbuild, rollup, webpack, bun)
-gem 'cssbundling-rails'        # For CSS processing (Tailwind, Sass, PostCSS, Bootstrap, etc.)
-
+ 
 # Turbolinks (still works, but consider migrating to Turbo if possible)
 gem 'turbolinks', '~> 5.2'
 
+gem 'turbo-rails'
+
 # JSON builder
 gem 'jbuilder', '~> 2.7'
+gem 'importmap-rails'
 
 gem 'kaminari'
 

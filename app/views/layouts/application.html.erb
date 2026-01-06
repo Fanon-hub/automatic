@@ -5,45 +5,43 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
-
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
   </head>
-  <header>
-    <nav>
-      <% if logged_in? %>
-        <%= link_to 'タスク一覧', tasks_path %>
-        <%= link_to 'タスク登録', new_task_path %>
-        
-        <% if current_user.admin? %>
-          <%= link_to 'ユーザー一覧', admin_users_path, id: 'users-index' %>
-          <%= link_to 'ユーザー登録', new_admin_user_path, id: 'add-user' %>
-        <% end %>
-        
-        <%= link_to 'アカウント設定', user_path(current_user), id: 'account-setting' %>
-        <%= link_to 'ログアウト', destroy_session_path, method: :delete, id: 'sign-out' %>
-      <% else %>
-        <%= link_to 'アカウント登録', new_user_path, id: 'sign-up' %>
-        <%= link_to 'ログイン', new_session_path, id: 'sign-in' %>
-      <% end %>
-    </nav>
-  </header>
+
   <body>
-    <nav id="global-nav">
-      <%= link_to t(:tasks_index), tasks_path %> <!-- "タスクリスト" -->
-      <%= link_to t(:new_task), new_task_path %> <!-- "タスク登録" -->
-    </nav>
-    
-    <% if notice %>
-      <div class="alert alert-info"><%= notice %></div> <!-- Translated flash -->
-    <% end %>
-    <% if alert %>
-      <div class="alert alert-danger"><%= alert %></div>
-    <% end %>
-    
-    <%= yield %>
+    <header>
+      <nav>
+        <% if logged_in? %>
+          <%= link_to t(:tasks_index), tasks_path %>
+          <%= link_to t(:new_task), new_task_path %>
+          
+          <% if current_user.admin? %>
+            <%= link_to 'ユーザー一覧', admin_users_path, id: 'users-index' %>
+            <%= link_to 'ユーザー登録', new_admin_user_path, id: 'add-user' %>
+          <% end %>
+          
+          <%= link_to 'アカウント設定', user_path(current_user), id: 'account-setting' %>
+          <%= link_to 'ログアウト', destroy_session_path, 
+                method: :delete, 
+                id: 'sign-out',
+                data: { confirm: t(:confirm_logout, default: 'ログアウトしますか？') } %>
+        <% else %>
+          <%= link_to 'アカウント登録', new_user_path, id: 'sign-up' %>
+          <%= link_to 'ログイン', new_session_path, id: 'sign-in' %>
+        <% end %>
+      </nav>
+    </header>
+
+    <main class="container">
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type == 'notice' ? 'success' : 'danger' %>">
+          <%= message %>
+        </div>
+      <% end %>
+      
+      <%= yield %>
+    </main>
   </body>
 </html>
