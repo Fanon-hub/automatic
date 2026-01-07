@@ -272,14 +272,6 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sprockets (4.2.2)
-      concurrent-ruby (~> 1.0)
-      logger
-      rack (>= 2.2.4, < 4)
-    sprockets-rails (3.5.2)
-      actionpack (>= 6.1)
-      activesupport (>= 6.1)
-      sprockets (>= 3.0.0)
     stringio (3.2.0)
     thor (1.4.0)
     timeout (0.6.0)
@@ -335,7 +327,6 @@ DEPENDENCIES
   rails_12factor
   rspec-rails
   selenium-webdriver
-  sprockets-rails
   turbo-rails
   turbolinks (~> 5.2)
   tzinfo-data

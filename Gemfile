@@ -59,7 +59,7 @@ end
 
 group :production do
   gem 'rails_12factor'
-  gem 'sprockets-rails'
+  # gem 'sprockets-rails'
 end
 
 # Windows compatibility
