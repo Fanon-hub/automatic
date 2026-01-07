@@ -1,50 +1,33 @@
-class UsersController < ApplicationController
-  skip_before_action :login_required, only: [:new, :create]
-  before_action :logout_required, only: [:new, :create]
-  before_action :set_user, only: [:show, :edit, :update]
-  before_action :correct_user, only: [:show, :edit, :update]
+# app/controllers/application_controller.rb
+class ApplicationController < ActionController::Base
+  # This applies to all controllers by default
+  before_action :login_required
   
-  def new
-    @user = User.new
-  end
-  
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      session[:user_id] = @user.id
-      redirect_to tasks_path, notice: 'アカウントを登録しました'
-    else
-      render :new
-    end
-  end
-  
-  def show
-  end
-  
-  def edit
-  end
-  
-  def update
-    if @user.update(user_params)
-      redirect_to user_path(@user), notice: 'アカウントを更新しました'
-    else
-      render :edit
-    end
-  end
+  helper_method :current_user, :logged_in?
   
   private
   
-  def set_user
-    @user = User.find(params[:id])
-  end
-  
-  def correct_user
-    unless current_user == @user
-      redirect_to tasks_path, alert: 'アクセス権限がありません'
+  # Method being skipped in UsersController for new/create actions
+  def login_required
+    unless logged_in?
+      redirect_to login_path, alert: "ログインしてください"
     end
   end
   
-  def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  # Method required for new/create actions in UsersController
+  def logout_required
+    if logged_in?
+      redirect_to tasks_path, alert: "すでにログインしています"
+    end
   end
-end 
+  
+  # Method used in correct_user check
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  end
+  
+  # Helper method to check login status
+  def logged_in?
+    current_user.present?
+  end
+end
