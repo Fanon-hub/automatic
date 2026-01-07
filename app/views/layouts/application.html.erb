@@ -12,32 +12,69 @@
 
   <body>
     <header>
-      <nav>
-        <% if logged_in? %>
-          <%= link_to t(:tasks_index), tasks_path %>
-          <%= link_to t(:new_task), new_task_path %>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <%= link_to "Task Manager", root_path, class: "navbar-brand" %>
           
-          <% if current_user.admin? %>
-            <%= link_to 'ユーザー一覧', admin_users_path, id: 'users-index' %>
-            <%= link_to 'ユーザー登録', new_admin_user_path, id: 'add-user' %>
-          <% end %>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
           
-          <%= link_to 'アカウント設定', user_path(current_user), id: 'account-setting' %>
-          <%= link_to 'ログアウト', destroy_session_path, 
-                method: :delete, 
-                id: 'sign-out',
-                data: { confirm: t(:confirm_logout, default: 'ログアウトしますか？') } %>
-        <% else %>
-          <%= link_to 'アカウント登録', new_user_path, id: 'sign-up' %>
-          <%= link_to 'ログイン', new_session_path, id: 'sign-in' %>
-        <% end %>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <% if logged_in? %>
+                <!-- User logged in navigation -->
+                <li class="nav-item">
+                  <span class="navbar-text me-3">
+                    Hello, <%= current_user.name %>
+                  </span>
+                </li>
+                <li class="nav-item">
+                  <%= link_to t(:tasks_index), tasks_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to t(:new_task), new_task_path, class: "nav-link" %>
+                </li>
+                
+                <% if current_user.admin? %>
+                  <li class="nav-item">
+                    <%= link_to t(:users_index, default: 'Users List'), admin_users_path, id: 'users-index', class: "nav-link" %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to t(:add_user, default: 'Add User'), new_admin_user_path, id: 'add-user', class: "nav-link" %>
+                  </li>
+                <% end %>
+                
+                <li class="nav-item">
+                  <%= link_to t(:account_settings, default: 'Account Settings'), user_path(current_user), id: 'account-setting', class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to t(:logout, default: 'Logout'), logout_path, 
+                        method: :delete, 
+                        id: 'sign-out',
+                        class: "nav-link",
+                        data: { confirm: t(:confirm_logout, default: 'Are you sure you want to log out?') } %>
+                </li>
+              <% else %>
+                <!-- User not logged in navigation -->
+                <li class="nav-item">
+                  <%= link_to t(:sign_in, default: 'Login'), login_path, id: 'sign-in', class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to t(:sign_up, default: 'Sign Up'), new_user_path, id: 'sign-up', class: "nav-link" %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
       </nav>
     </header>
 
-    <main class="container">
+    <main class="container mt-4">
       <% flash.each do |message_type, message| %>
-        <div class="alert alert-<%= message_type == 'notice' ? 'success' : 'danger' %>">
+        <div class="alert alert-<%= message_type == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
           <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       <% end %>
       
