@@ -1,36 +1,41 @@
 class User < ApplicationRecord
   has_secure_password
-  
+
   has_many :tasks, dependent: :destroy
-  
-  validates :name, presence: true
-  validates :email, presence: true, uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: { minimum: 6 }
-  validates :admin, inclusion: { in: [true, false] }
-  
+
+  validates :name,
+            presence: { message: "Please enter your name" }
+
+  validates :email,
+            presence: { message: "Please enter your e-mail address" },
+            uniqueness: { case_sensitive: false, message: "Your email address is already in use" }
+
+  validates :password,
+            length: { minimum: 6, message: "Please enter the password with at least 6 characters" },
+            allow_nil: true
+
+  validate :cannot_remove_last_admin, on: :update, if: :admin_changed?
+  before_destroy :cannot_destroy_last_admin
+
   before_validation :downcase_email
-  
-  # Admin validation callbacks
-  before_destroy :check_last_admin
-  before_update :check_last_admin_update
-  
+
   private
-  
+
   def downcase_email
     self.email = email.downcase if email.present?
   end
-  
-  def check_last_admin
-    if admin? && User.where(admin: true).count <= 1
-      errors.add(:base, '管理者が0人になるため削除できません')
-      throw :abort
+
+  def cannot_remove_last_admin
+    if admin_was && !admin && User.where(admin: true).where.not(id: id).empty?
+      errors.add(:base, "Cannot change privileges because there are zero administrators")
+      throw(:abort)
     end
   end
-  
-  def check_last_admin_update
-    if admin_changed? && admin_was && User.where(admin: true).count <= 1
-      errors.add(:base, '管理者が0人になるため権限を変更できません')
-      throw :abort
+
+  def cannot_destroy_last_admin
+    if admin? && User.where(admin: true).where.not(id: id).empty?
+      errors.add(:base, "Cannot delete because there are zero administrators")
+      throw(:abort)
     end
   end
 end

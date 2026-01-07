@@ -1,83 +1,63 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= t(:app_title, default: 'CdpWebManyoTask') %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TaskManager</title>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
+    <!-- Global Navigation -->
     <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <%= link_to "Task Manager", root_path, class: "navbar-brand" %>
-          
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-              <% if logged_in? %>
-                <!-- User logged in navigation -->
-                <li class="nav-item">
-                  <span class="navbar-text me-3">
-                    Hello, <%= current_user.name %>
-                  </span>
-                </li>
-                <li class="nav-item">
-                  <%= link_to t(:tasks_index), tasks_path, class: "nav-link" %>
-                </li>
-                <li class="nav-item">
-                  <%= link_to t(:new_task), new_task_path, class: "nav-link" %>
-                </li>
-                
-                <% if current_user.admin? %>
-                  <li class="nav-item">
-                    <%= link_to t(:users_index, default: 'Users List'), admin_users_path, id: 'users-index', class: "nav-link" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to t(:add_user, default: 'Add User'), new_admin_user_path, id: 'add-user', class: "nav-link" %>
-                  </li>
-                <% end %>
-                
-                <li class="nav-item">
-                  <%= link_to t(:account_settings, default: 'Account Settings'), user_path(current_user), id: 'account-setting', class: "nav-link" %>
-                </li>
-                <li class="nav-item">
-                  <%= link_to t(:logout, default: 'Logout'), logout_path, 
-                        method: :delete, 
-                        id: 'sign-out',
-                        class: "nav-link",
-                        data: { confirm: t(:confirm_logout, default: 'Are you sure you want to log out?') } %>
-                </li>
-              <% else %>
-                <!-- User not logged in navigation -->
-                <li class="nav-item">
-                  <%= link_to t(:sign_in, default: 'Login'), login_path, id: 'sign-in', class: "nav-link" %>
-                </li>
-                <li class="nav-item">
-                  <%= link_to t(:sign_up, default: 'Sign Up'), new_user_path, id: 'sign-up', class: "nav-link" %>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
+      <nav>
+        <% if logged_in? %>
+          <%= link_to "Task List", tasks_path %>
+          <%= link_to "Register a task", new_task_path %>
+
+          <%= link_to "Account details",
+                      user_path(current_user),
+                      id: "account-setting" %>
+
+          <%= button_to "Logout", logout_path, 
+              method: :delete, 
+              data: { turbo_confirm: "Are you sure you want to log out?" }, 
+              id: "sign-out" %>
+
+          <% if current_user.admin? %>
+            <%= link_to "User List",
+                        admin_users_path,
+                        id: "users-index" %>
+
+            <%= link_to "Register a user",
+                        new_admin_user_path,
+                        id: "add-user" %>
+          <% end %>
+        <% else %>
+          <%= link_to "Login",
+                      login_path,
+                      id: "sign-in" %>
+
+          <%= link_to "Register for an account",
+                      new_user_path,
+                      id: "sign-up" %>
+        <% end %>
       </nav>
     </header>
-
-    <main class="container mt-4">
-      <% flash.each do |message_type, message| %>
-        <div class="alert alert-<%= message_type == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
+    <!-- Flash Messages -->
+    <section class="flash-messages">
+      <% flash.each do |type, message| %>
+        <div class="flash <%= type %>">
           <%= message %>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       <% end %>
-      
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
       <%= yield %>
     </main>
   </body>

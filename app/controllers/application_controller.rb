@@ -1,27 +1,31 @@
 class ApplicationController < ActionController::Base
-  before_action :login_required
-
   helper_method :current_user, :logged_in?
 
   private
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 
   def logged_in?
-    current_user.present?
+    !!current_user
   end
 
-  def login_required
+  def require_login
     unless logged_in?
-      redirect_to login_path, alert: "ログインしてください"
+      redirect_to login_path, alert: "Please log in"
     end
   end
 
-  def logout_required
+  def require_logout
     if logged_in?
-      redirect_to tasks_path, alert: "すでにログインしています"
+      redirect_to tasks_path, alert: "Please log out."
+    end
+  end
+
+  def require_admin
+    unless current_user&.admin?
+      redirect_to tasks_path, alert: "Only administrators can access"
     end
   end
 end

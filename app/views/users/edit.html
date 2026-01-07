@@ -1,0 +1,32 @@
+<h1>Edit Account Page</h1>
+<div class="card-body">
+  <%= form_with model: @user, local: true do |f| %>
+
+    <div class="mb-3">
+      <%= f.label :name, "Name", class: "form-label" %>
+      <%= f.text_field :name, class: "form-control", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :email, "Email address", class: "form-label" %>
+      <%= f.email_field :email, class: "form-control", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :password, "Password", class: "form-label" %>
+      <%= f.password_field :password, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :password_confirmation, "Password (confirmation)", class: "form-label" %>
+      <%= f.password_field :password_confirmation, class: "form-control" %>
+    </div>
+
+    <div class="d-grid">
+      <%= f.submit "Update", class: "btn btn-primary", id: "update-user" %>
+    </div>
+
+  <% end %>
+</div>
+
+<%= link_to "Back", users_path %>

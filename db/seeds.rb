@@ -1,36 +1,49 @@
-# Create regular user
-regular_user = User.create!(
-  name: '一般ユーザー',
-  email: 'user@example.com',
-  password: 'password',
+# db/seeds.rb
+
+Task.delete_all
+User.delete_all
+
+puts "Cleared all data."
+
+# Create general user
+user = User.create!(
+  name: "General User",
+  email: "user@example.com",
+  password: "password",
   admin: false
 )
 
 # Create admin user
-admin_user = User.create!(
-  name: '管理者',
-  email: 'admin@example.com',
-  password: 'password',
+admin = User.create!(
+  name: "Administrator",
+  email: "admin@example.com",
+  password: "password",
   admin: true
 )
 
-# Create 50 tasks for regular user
+puts "Created 2 users."
+
+# Create 50 tasks for each user
 50.times do |i|
-  regular_user.tasks.create!(
-    title: "一般ユーザータスク #{i + 1}",
-    content: "これは一般ユーザーのタスク #{i + 1} の内容です。",
-    created_at: rand(1..60).days.ago
+  Task.create!(
+    user: user,
+    title: "User Task #{i + 1}",
+    content: "Content for user task #{i + 1}",
+    deadline_on: Date.current + (i + 1).days,
+    priority: [:low, :medium, :high].sample,
+    status: [:not_started, :in_progress, :completed].sample
+  )
+
+  Task.create!(
+    user: admin,
+    title: "Admin Task #{i + 1}",
+    content: "Content for admin task #{i + 1}",
+    deadline_on: Date.current + (i + 1).days,
+    priority: [:low, :medium, :high].sample,
+    status: [:not_started, :in_progress, :completed].sample
   )
 end
 
-# Create 50 tasks for admin user
-50.times do |i|
-  admin_user.tasks.create!(
-    title: "管理者タスク #{i + 1}",
-    content: "これは管理者のタスク #{i + 1} の内容です。",
-    created_at: rand(1..60).days.ago
-  )
-end
-
-puts "Created users: #{User.count}"
-puts "Created tasks: #{Task.count}"
+puts "Seeding completed!"
+puts "Users: #{User.count}"
+puts "Tasks: #{Task.count} (50 per user)"

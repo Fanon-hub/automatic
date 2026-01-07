@@ -1,2 +1,14 @@
-<h1><%= t(:destroy_task_page) %></h1>
-<p><%= t(:destroy_task_description) %></p>
+<h1>Delete Task</h1>
+
+<p>Are you sure you want to permanently delete this task?</p>
+
+<p>
+  <strong>Title:</strong> <%= @task.title %><br>
+  <strong>Content:</strong> <%= @task.content %><br>
+  <strong>Deadline:</strong> <%= @task.deadline_on %><br>
+  <strong>Status:</strong> <%= @task.status.humanize %>
+</p>
+
+<%= button_to "Yes, Delete This Task", task_path(@task), method: :delete, class: "btn-danger" %>
+
+<%= link_to "No, Cancel", task_path(@task) %>

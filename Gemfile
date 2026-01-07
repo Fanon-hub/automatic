@@ -24,6 +24,7 @@ gem 'turbo-rails'
 gem 'jbuilder', '~> 2.7'
 gem 'importmap-rails'
 
+
 gem 'kaminari'
 
 # Use Active Model has_secure_password

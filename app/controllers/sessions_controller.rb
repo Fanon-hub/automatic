@@ -1,25 +1,23 @@
 class SessionsController < ApplicationController
-  skip_before_action :login_required, only: [:new, :create]
-  before_action :logout_required, only: [:new, :create]  # Prevents logged-in users from accessing login page
+  before_action :require_logout, only: [:new]
 
   def new
   end
 
   def create
-    user = User.find_by(email: params[:email].to_s.downcase)  # Recommended: downcase email
-
+    user = User.find_by(email: params[:email].to_s.downcase)
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to tasks_path, notice: "ログインしました"
+      redirect_to tasks_path, notice: "I have logged in"
     else
-      flash.now[:alert] = "メールアドレスまたはパスワードが正しくありません"
-      render :new, status: :unprocessable_entity
+      flash.now[:alert] = "Your email address or password is incorrect"
+      render :new
     end
   end
 
   def destroy
     session.delete(:user_id)
-    @current_user = nil  # Clear memoized current_user
-    redirect_to new_session_path, notice: "ログアウトしました"
+    @current_user = nil
+    redirect_to login_path, notice: "logged out"
   end
 end

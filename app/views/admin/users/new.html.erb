@@ -1,0 +1,44 @@
+<h1>User registration page</h1>
+
+<%= form_with model: @user, url: admin_users_path, local: true do |f| %>
+  <div>
+    <%= f.label :name, "Name" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :email, "Email address" %>
+    <%= f.email_field :email %>
+  </div>
+
+  <div>
+    <%= f.label :password, "Password" %>
+    <%= f.password_field :password %>
+  </div>
+
+  <div>
+    <%= f.label :password_confirmation, "Password (confirmation)" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <div>
+    <%= f.check_box :admin %>
+    <%= f.label :admin, "Administrator privileges" %>
+  </div>
+
+  <%= f.submit "Register", id: "create-user" %>
+<% end %>
+
+<%= link_to "Back", admin_users_path %>
+
+<!-- Optional: Display validation errors -->
+<% if @user.errors.any? %>
+  <div style="color: red;">
+    <h3><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h3>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

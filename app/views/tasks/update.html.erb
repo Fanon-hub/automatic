@@ -1,2 +1,44 @@
-<h1><%= t(:update_task_page) %></h1>
-<p><%= t(:update_task_description) %></p> 
+<h1>Edit Task</h1>
+
+<% if @task.errors.any? %>
+  <div style="color: red;">
+    <h3><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h3>
+    <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @task, local: true do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+
+  <div>
+    <%= f.label :deadline_on, "Deadline" %>
+    <%= f.date_field :deadline_on %>
+  </div>
+
+  <div>
+    <%= f.label :priority %>
+    <%= f.select :priority, Task.priorities.keys.map { |p| [p.humanize, p] } %>
+  </div>
+
+  <div>
+    <%= f.label :status %>
+    <%= f.select :status, Task.statuses.keys.map { |s| [s.humanize, s] } %>
+  </div>
+
+  <%= f.submit "Update Task" %>
+<% end %>
+
+<%= link_to "Back to Task", task_path(@task) %> |
+<%= link_to "Back to Task List", tasks_path %>
