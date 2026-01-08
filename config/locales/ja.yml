@@ -16,16 +16,6 @@ ja:
       destroy: "削除"
       confirm: "本当に削除しますか？"
 
-  # Task Registration Screen
-  new_task_page: "タスク登録ページ"
-  title_label: "タイトル"
-  content_label: "内容"
-  create_task: "登録"
-  back: "戻る"
-
-  # Task Details Screen
-  show_task_page: "タスク詳細ページ"
-  tasks:
     show:
       title_item: "タイトル"
       content_item: "内容"
@@ -33,30 +23,60 @@ ja:
       edit: "編集"
       back: "戻る"
 
-  # Task Edit Screen
-  edit_task_page: "タスク編集ページ"
-  update_task: "更新"
-  tasks:
     edit:
       back: "戻る"
 
-  # Validation Messages
+  # Task Registration Screen
+  new_task_page: "タスク登録ページ"
+  title_label: "タイトル"
+  content_label: "内容"
+  create_task: "登録"
+  back: "戻る"
+
+  # Task Edit Screen
+  edit_task_page: "タスク編集ページ"
+  update_task: "更新"
+
+  # ActiveRecord
   activerecord:
-    errors:
-      models:
-        task: 
-          attributes:
-            title:
-              blank: "タイトルを入力してください"
-            content:
-              blank: "内容を入力してください"
     models:
       task: "タスク"
+      user: "ユーザー"
+
     attributes:
       task:
         title: "タイトル"
         content: "内容"
         created_at: "作成日時"
+
+      user:
+        name: "名前"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード確認"
+        admin: "管理者"
+
+    errors:
+      models:
+        task:
+          attributes:
+            title:
+              blank: "タイトルを入力してください"
+            content:
+              blank: "内容を入力してください"
+
+        user:
+          attributes:
+            name:
+              blank: "を入力してください"
+            admin:
+              inclusion: "の値が正しくありません"
+
+  # Generic Error Messages (fallback)
+  errors:
+    messages:
+      blank: "を入力してください"
+      inclusion: "は一覧に含まれていません"
 
   # Flash Messages
   flash:
@@ -68,16 +88,7 @@ ja:
       destroy:
         notice: "タスクを削除しました"
 
-  # Time Formats
-  time:
-    formats:
-      short: "%Y年%m月%d日 %H時%M分"
-  
-ja:
-  errors:
-    messages:
-      blank_title: "タイトルを入力してください"
-      blank_content: "内容を入力してください" 
+  # Enums
   enums:
     task:
       priority:
@@ -88,3 +99,8 @@ ja:
         not_started: "未着手"
         in_progress: "着手中"
         completed: "完了"
+
+  # Time Formats
+  time:
+    formats:
+      short: "%Y年%m月%d日 %H時%M分"

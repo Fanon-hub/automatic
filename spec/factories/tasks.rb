@@ -5,7 +5,8 @@ FactoryBot.define do
     deadline_on { Date.today + 1.week }
     priority { :medium }
     status { :not_started }
-    created_at { Time.current }
+    created_at { Time.current } 
+    association :user 
 
     trait :high_priority do
       priority { :high }

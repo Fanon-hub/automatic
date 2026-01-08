@@ -1,0 +1,39 @@
+<h1>User edit page</h1>
+
+<%= form_with model: @user, url: admin_user_path(@user), method: :patch, local: true do |f| %>
+  <div>
+    <%= f.label :name, "Name" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :email, "Email address" %>
+    <%= f.email_field :email %>
+  </div>
+
+  <div>
+    <%= f.label :password, "Password" %>
+    <%= f.password_field :password %>
+  </div>
+
+  <div>
+    <%= f.label :password_confirmation, "Password (confirmation)" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <div>
+    <%= f.check_box :admin %>
+    <%= f.label :admin, "Administrator privileges" %>
+  </div>
+
+  <%= f.submit "Update", id: "update-user" %>
+<% end %>
+
+<%= link_to "Back", admin_users_path %>
+<% if @user.errors.any? %>
+  <div style="color: red;">
+    <% @user.errors.full_messages.each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
+  </div>
+<% end %>

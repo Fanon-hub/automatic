@@ -1,0 +1,25 @@
+
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * Any CSS (and SCSS, if configured) files within this directory can be referenced here.
+ */
+
+ /* You can add your custom styles here */
+ body {
+   font-family: Arial, sans-serif;
+   margin: 40px;
+ }
+
+ /* Optional: basic styling for flash messages */
+ .flash-notice {
+   color: green;
+   padding: 10px;
+   background: #f0fff0;
+ }
+
+ .flash-alert {
+   color: red;
+   padding: 10px;
+   background: #fff0f0;
+ }

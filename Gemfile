@@ -14,19 +14,21 @@ gem 'puma', '~> 6.4'  # Updated from 4.1 → modern secure version (Puma 4.x is 
 
 # Modern asset pipeline (replaces Sprockets/Webpacker)
 gem 'propshaft'                # Handles fingerprinting & asset serving
-gem 'jsbundling-rails'         # For JS bundling (esbuild, rollup, webpack, bun)
-gem 'cssbundling-rails'        # For CSS processing (Tailwind, Sass, PostCSS, Bootstrap, etc.)
-
+ 
 # Turbolinks (still works, but consider migrating to Turbo if possible)
 gem 'turbolinks', '~> 5.2'
 
+gem 'turbo-rails'
+
 # JSON builder
 gem 'jbuilder', '~> 2.7'
+gem 'importmap-rails'
+
 
 gem 'kaminari'
 
 # Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.20'
+gem 'bcrypt', '~> 3.1.20'
 
 # Use Active Storage variants [optional]
 # gem 'image_processing', '~> 1.2'
@@ -36,6 +38,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -52,6 +55,11 @@ group :test do
   gem 'capybara', '>= 3.39'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+end
+
+group :production do
+  gem 'rails_12factor'
+  # gem 'sprockets-rails'
 end
 
 # Windows compatibility

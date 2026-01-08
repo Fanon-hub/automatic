@@ -1,30 +1,64 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= t(:app_title, default: 'CdpWebManyoTask') %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TaskManager</title>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
-
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-    <%= stylesheet_link_tag "application" %>
+    <%= javascript_importmap_tags %>
   </head>
+
   <body>
-    <nav id="global-nav">
-      <%= link_to t(:tasks_index), tasks_path %> <!-- "タスクリスト" -->
-      <%= link_to t(:new_task), new_task_path %> <!-- "タスク登録" -->
-    </nav>
-    
-    <% if notice %>
-      <div class="alert alert-info"><%= notice %></div> <!-- Translated flash -->
-    <% end %>
-    <% if alert %>
-      <div class="alert alert-danger"><%= alert %></div>
-    <% end %>
-    
-    <%= yield %>
+    <!-- Global Navigation -->
+    <header>
+      <nav>
+        <% if logged_in? %>
+          <%= link_to "Task List", tasks_path %>
+          <%= link_to "Register a task", new_task_path %>
+
+          <%= link_to "Account details",
+                      user_path(current_user),
+                      id: "account-setting" %>
+
+          <%= button_to "Logout", logout_path, 
+              method: :delete, 
+              data: { turbo_confirm: "Are you sure you want to log out?" }, 
+              id: "sign-out" %>
+
+          <% if current_user.admin? %>
+            <%= link_to "User List",
+                        admin_users_path,
+                        id: "users-index" %>
+
+            <%= link_to "Register a user",
+                        new_admin_user_path,
+                        id: "add-user" %>
+          <% end %>
+        <% else %>
+          <%= link_to "Login",
+                      login_path,
+                      id: "sign-in" %>
+
+          <%= link_to "Register for an account",
+                      new_user_path,
+                      id: "sign-up" %>
+        <% end %>
+      </nav>
+    </header>
+    <!-- Flash Messages -->
+    <section class="flash-messages">
+      <% flash.each do |type, message| %>
+        <div class="flash <%= type %>">
+          <%= message %>
+        </div>
+      <% end %>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+      <%= yield %>
+    </main>
   </body>
 </html>

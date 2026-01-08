@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
   root 'tasks#index'
+
   resources :tasks
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  # Login / Logout
+  get    '/login',   to: 'sessions#new',     as: :login 
+  post   '/login',   to: 'sessions#create'
+  delete '/logout',  to: 'sessions#destroy', as: :logout 
+
+  # User registration & account
+  resources :users, only: [:new, :create]
+  resource :user, only: [:show, :edit, :update]
+
+  # Admin namespace
+  namespace :admin do
+    resources :users
+  end
 end

@@ -1,9 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  let!(:first_task) { create(:task, title: 'first_task', deadline_on: '2022-02-18', priority: 'medium', status: 'not_started') }
-  let!(:second_task) { create(:task, title: 'second_task', deadline_on: '2022-02-17', priority: 'high', status: 'in_progress') }
-  let!(:third_task) { create(:task, title: 'third_task', deadline_on: '2022-02-16', priority: 'low', status: 'completed') }
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:first_task) { create(:task, title: 'first_task', deadline_on: '2022-02-18', priority: 'medium', status: 'not_started', user: user) }
+  let!(:second_task) { create(:task, title: 'second_task', deadline_on: '2022-02-17', priority: 'high', status: 'in_progress', user: user) }
+  let!(:third_task) { create(:task, title: 'third_task', deadline_on: '2022-02-16', priority: 'low', status: 'completed', user: user) }
+  
+  before do
+    login(user)
+  end
 
   describe 'List display function' do
     before do
@@ -61,60 +66,65 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
-    describe 'Create and update flows' do
-      it 'successfully creates a new task with all fields' do
-        visit new_task_path
-        fill_in 'タイトル', with: 'New Task'
-        fill_in '内容', with: 'Some content'
-        fill_in '終了期限', with: Date.current + 2.days
-        select '中', from: '優先度'
-        select '未着手', from: 'ステータス'
-        click_button '登録'
-        expect(page).to have_current_path(tasks_path)
-        expect(page).to have_content('タスクが登録されました').or have_content('タスクを登録しました')
-        expect(page).to have_content('New Task')
-      end
 
-      it 'shows validation errors on failed creation' do
-        visit new_task_path
-        fill_in 'タイトル', with: ''
-        fill_in '終了期限', with: ''
-        click_button '登録'
-        expect(page).to have_content('タイトルを入力してください')
-        expect(page).to have_content('終了期限を入力してください').or have_content('Deadline onを入力してください')
-      end
-
-      it 'successfully updates a task' do
-        task = create(:task, title: 'Old Title', priority: :low, status: :not_started)
-        visit edit_task_path(task)
-        fill_in 'タイトル', with: 'Updated Title'
-        select '高', from: '優先度'
-        select '着手中', from: 'ステータス'
-        click_button '更新'
-        expect(page).to have_current_path(tasks_path)
-        expect(page).to have_content('タスクが更新されました').or have_content('タスクを更新しました')
-        expect(page).to have_content('Updated Title')
-      end
-
-      it 'shows validation errors on failed update' do
-        task = create(:task, title: 'To Edit')
-        visit edit_task_path(task)
-        fill_in 'タイトル', with: ''
-        click_button '更新'
-        expect(page).to have_content('タイトルを入力してください')
-      end
+  describe 'Create and update flows' do
+    it 'successfully creates a new task with all fields' do
+      visit new_task_path
+      fill_in 'タイトル', with: 'New Task'
+      fill_in '内容', with: 'Some content'
+      fill_in '終了期限', with: Date.current + 2.days
+      select '中', from: '優先度'
+      select '未着手', from: 'ステータス'
+      click_button '登録'
+      expect(page).to have_current_path(tasks_path)
+      expect(page).to have_content('タスクが登録されました').or have_content('タスクを登録しました')
+      expect(page).to have_content('New Task')
+      # Verify the task belongs to the user
+      expect(user.tasks.last.title).to eq('New Task')
     end
 
-    describe 'Pagination and filters' do
-      before do
-        create_list(:task, 25, :high_priority, :due_tomorrow, :in_progress)
-      end
-      it 'preserves sort/search params across pages' do
-        visit tasks_path(sort_priority: true, search: { title: 'Task' })
-        click_link '次へ' if page.has_link?('次へ')
-        expect(page).to have_current_path(/sort_priority=true/)
-        expect(page).to have_content('Task')
-      end
+    it 'shows validation errors on failed creation' do
+      visit new_task_path
+      fill_in 'タイトル', with: ''
+      fill_in '終了期限', with: ''
+      click_button '登録'
+      expect(page).to have_content('タイトルを入力してください')
+      expect(page).to have_content('終了期限を入力してください').or have_content('Deadline onを入力してください')
+    end
+
+    it 'successfully updates a task' do
+      task = create(:task, title: 'Old Title', priority: :low, status: :not_started, user: user)
+      visit edit_task_path(task)
+      fill_in 'タイトル', with: 'Updated Title'
+      select '高', from: '優先度'
+      select '着手中', from: 'ステータス'
+      click_button '更新'
+      expect(page).to have_current_path(tasks_path)
+      expect(page).to have_content('タスクが更新されました').or have_content('タスクを更新しました')
+      expect(page).to have_content('Updated Title')
+      # Verify the task belongs to the user
+      expect(user.tasks.find(task.id).title).to eq('Updated Title')
+    end
+
+    it 'shows validation errors on failed update' do
+      task = create(:task, title: 'To Edit', user: user)
+      visit edit_task_path(task)
+      fill_in 'タイトル', with: ''
+      click_button '更新'
+      expect(page).to have_content('タイトルを入力してください')
+    end
+  end
+
+  describe 'Pagination and filters' do
+    before do
+      create_list(:task, 25, :high_priority, :due_tomorrow, :in_progress, user: user)
+    end
+    
+    it 'preserves sort/search params across pages' do
+      visit tasks_path(sort_priority: true, search: { title: 'Task' })
+      click_link '次へ' if page.has_link?('次へ')
+      expect(page).to have_current_path(/sort_priority=true/)
+      expect(page).to have_content('Task')
     end
   end
 end

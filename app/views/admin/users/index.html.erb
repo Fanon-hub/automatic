@@ -1,0 +1,30 @@
+<h1>User list page</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email address</th>
+      <th>Administrator Authority</th>
+      <th>Number of registered tasks</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.admin? ? "Yes" : "None" %></td>
+        <td><%= user.tasks.count %></td>
+        <td>
+          <%= link_to "show", admin_user_path(user), class: "show-user" %>
+          <%= link_to "edit", edit_admin_user_path(user), class: "edit-user" %>
+          <%= link_to "delete", admin_user_path(user), method: :delete,
+                      data: { confirm: "Are you sure you want to delete this user?" },
+                      class: "destroy-user" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table> 

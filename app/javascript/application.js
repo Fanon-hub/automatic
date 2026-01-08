@@ -1,1 +1,1 @@
-console.log("JavaScript bundle loaded successfully via esbuild!");
+// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails

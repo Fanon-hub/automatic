@@ -1,0 +1,19 @@
+<h1>Login Page</h1>
+
+<%= form_with url: login_path, local: true do |f| %>
+  <div>
+    <%= f.label :email, "Email address" %>
+    <%= f.email_field :email %>
+  </div>
+
+  <div>
+    <%= f.label :password, "Password" %>
+    <%= f.password_field :password %>
+  </div>
+
+  <%= f.submit "Login", id: "create-session" %>
+<% end %>
+
+<% if flash[:alert] %>
+  <p style="color: red;"><%= flash[:alert] %></p>
+<% end %>
