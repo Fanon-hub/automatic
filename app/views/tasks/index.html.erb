@@ -1,30 +1,37 @@
-<h1>タスク一覧</h1>
+<h1>Task List</h1>
 
 <%= form_with url: tasks_path, method: :get, scope: :search do |f| %>
   <div>
-    <%= f.label :title, "タイトル" %>
-    <%= f.text_field :title %>
+    <%= f.label :title, 'Title', for: 'search_title' %>
+    <%= f.text_field :title, class: 'form-control', id: 'search_title' %>
   </div>
   <div>
-    <%= f.label :status, "ステータス" %>
-    <%= f.select :status, Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, include_blank: true %>
-    </div>
-    <div>
-      <%= f.label :priority, "優先度" %>
-      <%= f.select :priority, Task.priorities.keys.map { |k| [t("enums.task.priority.#{k}"), k] }, include_blank: true %>
+    <%= f.label :status, 'Status', for: 'search_status' %>
+    <%= f.select :status, Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, { include_blank: true }, class: 'form-control', id: 'search_status' %>
   </div>
-  <%= f.submit "検索", id: "search_task" %>
+  <div>
+    <%= f.label :label_id, 'Label', for: 'search_label' %>
+    <%= f.select :label_id, options_from_collection_for_select(current_user.labels, :id, :name), { include_blank: true }, class: 'form-control', id: 'search_label' %>
+  </div>
+  <div>
+    <%= f.label :priority, 'Priority', for: 'search_priority' %>
+    <%= f.select :priority, Task.priorities.keys.map { |k| [t("enums.task.priority.#{k}"), k] }, { include_blank: true }, class: 'form-control', id: 'search_priority' %>
+  </div>
+  <div style="margin-top: 1rem;">
+    <%= f.submit 'Search', id: 'search_task', class: 'btn btn-primary' %>
+  </div>
 <% end %>
 
-<table>
-  <thead>
+<table class="table table-striped table-hover table-bordered">
+  <thead class="thead-light">
     <tr>
-      <th>タイトル</th>
-      <th><%= link_to "終了期限", tasks_path(sort_deadline_on: true) %></th>
-      <th><%= link_to "優先度", tasks_path(sort_priority: true) %></th>
-      <th>ステータス</th>
-      <th>作成日時</th>
-      <th>操作</th>
+      <th>Title</th>
+      <th><%= link_to "Deadline", tasks_path(sort_deadline: true) %></th>
+      <th><%= link_to "Priority", tasks_path(sort_priority: true) %></th>
+
+      <th>Status</th>
+      <th>Created At</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -36,11 +43,16 @@
         <td><%= t("enums.task.status.#{task.status}") %></td>
         <td><%= task.created_at %></td>
         <td>
-          <%= link_to '詳細', task %>
-          <%= link_to '編集', edit_task_path(task) %>
-          <%= link_to '削除', task, method: :delete, data: { confirm: '削除しますか？' } %>
+          <%= link_to 'Show', task_path(task), class: 'btn btn-info btn-sm' %>
+          <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-success btn-sm' %>
+          <%= link_to 'Delete', task_path(task), 
+                      method: :delete, 
+                      data: { confirm: 'Are you sure you want to delete this task?' }, 
+                      class: 'btn btn-danger btn-sm' %>
+          
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<%= paginate @tasks, params: request.query_parameters %>

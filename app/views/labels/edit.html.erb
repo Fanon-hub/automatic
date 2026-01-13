@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>Label Edit Page</h1>
+  <%= form_with model: @label, local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :name, 'Name' %>
+      <%= f.text_field :name, class: 'form-control', id: 'label_name' %>
+      <% if @label.errors[:name].any? %>
+        <small class="text-danger">Please enter a name</small>
+      <% end %>
+    </div>
+    <%= f.submit 'Update', class: 'btn btn-primary' %>
+  <% end %>
+  <br>
+  <%= link_to 'Return', labels_path, class: 'btn btn-secondary back' %>
+</div>

@@ -4,19 +4,26 @@ class TasksController < ApplicationController
   before_action :correct_user_task, only: [:show, :edit, :update, :destroy]
   
   def index
-    tasks = Task.all
+    @tasks = current_user.tasks
 
-    
-    tasks = tasks.latest          if params[:sort_created_at].present?
-    tasks = tasks.deadline_asc    if params[:sort_deadline_on].present?
-    tasks = tasks.priority_desc   if params[:sort_priority].present?
-    
+    # sorting
+    @tasks = @tasks.deadline_asc  if params[:sort_deadline].present?
+    @tasks = @tasks.priority_desc if params[:sort_priority].present?
+
+    # searching
     if params[:search].present?
-      tasks = tasks.search(params[:search])
+      @tasks = @tasks.where('title LIKE ?', "%#{params[:search][:title]}%") if params[:search][:title].present?
+      @tasks = @tasks.where(status: params[:search][:status]) if params[:search][:status].present?
+
+      if params[:search][:label_id].present?
+        @tasks = @tasks.joins(:labels).where(labels: { id: params[:search][:label_id] })
+      end
     end
 
-    @tasks = current_user.tasks.order(created_at: :desc).page(params[:page])
+    @tasks = @tasks.page(params[:page])
   end
+
+
   
   def new
     @task = current_user.tasks.new 
@@ -28,7 +35,7 @@ class TasksController < ApplicationController
   def create
     @task = current_user.tasks.new(task_params) 
     if @task.save
-      redirect_to tasks_path, notice: 'タスクが登録されました'
+      redirect_to tasks_path, notice: 'Task was successfully created.'
     else
       render :new
     end
@@ -39,7 +46,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, notice: 'タスクが更新されました'
+      redirect_to tasks_path, notice: 'Task was successfully updated.'
     else
       render :edit
     end
@@ -47,7 +54,7 @@ class TasksController < ApplicationController
 
   def destroy 
     @task.destroy
-    redirect_to tasks_path, notice: 'タスクが削除されました'
+    redirect_to tasks_path, notice: 'Task was successfully deleted.'
   end
   
   private
@@ -58,10 +65,10 @@ class TasksController < ApplicationController
 
   def correct_user_task
     unless current_user == @task.user
-      redirect_to tasks_path, alert: 'アクセス権限がありません'
+      redirect_to tasks_path, alert: 'You are not authorized.'
     end
   end
   def task_params
-    params.require(:task).permit(:title, :content)
+    params.require(:task).permit(:title, :content, :deadline_on, :priority, :status, label_ids: [])
   end
 end

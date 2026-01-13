@@ -1,11 +1,10 @@
-<h1>タスク詳細</h1>
-
-<p><strong>タイトル:</strong> <%= @task.title %></p>
-<p><strong>内容:</strong> <%= @task.content %></p>
-<p><strong>終了期限:</strong> <%= @task.deadline_on %></p>
-<p><strong>優先度:</strong> <%= t("enums.task.priority.#{@task.priority}") %></p>
-<p><strong>ステータス:</strong> <%= t("enums.task.status.#{@task.status}") %></p>
-<p><strong>作成日時:</strong> <%= @task.created_at %></p>
-
-<%= link_to '編集', edit_task_path(@task) %> |
-<%= link_to '戻る', tasks_path %>
+<div>
+  <strong>Labels:</strong>
+  <% if @task.labels.any? %>
+    <% @task.labels.each do |label| %>
+      <span class="badge badge-pill badge-info"><%= label.name %></span>
+    <% end %>
+  <% else %>
+    None
+  <% end %>
+</div>

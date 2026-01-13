@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @user.email.downcase!
     if @user.save
       session[:user_id] = @user.id
-      redirect_to tasks_path, notice: "I have registered an account"
+      redirect_to tasks_path, notice: "You are registered."
     else
       render :new
     end
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @user.assign_attributes(user_params)
     @user.email.downcase! if user_params[:email]
     if @user.save
-      redirect_to user_path, notice: "Your account has been updated"
+      redirect_to user_path, notice: "Your account has been updated."
     else
       render :edit
     end

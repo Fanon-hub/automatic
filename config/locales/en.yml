@@ -31,3 +31,14 @@
 
 en:
   hello: "Hello world"
+
+  enums:
+    task:
+      priority:
+        high: "High"
+        medium: "Medium"
+        low: "Low"
+      status:
+        not_started: "Not Started"
+        in_progress: "In Progress"
+        completed: "Completed"

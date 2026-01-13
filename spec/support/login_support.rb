@@ -1,9 +1,9 @@
 module LoginSupport
   def login(user)
     visit new_session_path
-    fill_in 'メールアドレス', with: user.email
-    fill_in 'パスワード', with: 'password'
-    click_button 'ログイン'
+    fill_in 'Email address', with: user.email
+    fill_in 'password', with: 'password'
+    click_button 'Log in'
   end
 end
 

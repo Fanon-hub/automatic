@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     unless logged_in?
-      redirect_to login_path, alert: "Please log in"
+      redirect_to login_path, alert: "Please log in."
     end
   end
 
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   def require_admin
     unless current_user&.admin?
-      redirect_to tasks_path, alert: "Only administrators can access"
+      redirect_to tasks_path, alert: "You are not authorized."
     end
   end
 end

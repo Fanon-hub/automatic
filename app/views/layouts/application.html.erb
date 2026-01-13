@@ -13,52 +13,34 @@
   <body>
     <!-- Global Navigation -->
     <header>
-      <nav>
-        <% if logged_in? %>
-          <%= link_to "Task List", tasks_path %>
-          <%= link_to "Register a task", new_task_path %>
-
-          <%= link_to "Account details",
-                      user_path(current_user),
-                      id: "account-setting" %>
-
-          <%= button_to "Logout", logout_path, 
-              method: :delete, 
-              data: { turbo_confirm: "Are you sure you want to log out?" }, 
-              id: "sign-out" %>
-
-          <% if current_user.admin? %>
-            <%= link_to "User List",
-                        admin_users_path,
-                        id: "users-index" %>
-
-            <%= link_to "Register a user",
-                        new_admin_user_path,
-                        id: "add-user" %>
-          <% end %>
-        <% else %>
-          <%= link_to "Login",
-                      login_path,
-                      id: "sign-in" %>
-
-          <%= link_to "Register for an account",
-                      new_user_path,
-                      id: "sign-up" %>
-        <% end %>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Task App</a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item"><%= link_to 'Task List', tasks_path, class: 'nav-link' %></li>
+            <li class="nav-item"><%= link_to 'Register a task', new_task_path, class: 'nav-link' %></li>
+            <li class="nav-item"><%= link_to 'Label List', labels_path, class: 'nav-link', id: 'labels-index' %></li>
+            <li class="nav-item"><%= link_to 'Register a label', new_label_path, class: 'nav-link', id: 'new-label' %></li>
+            <li class="nav-item"><%= link_to 'Account details', user_path, class: 'nav-link' %></li>
+            <li class="nav-item"><%= link_to 'Logout', logout_path, class: 'nav-link' %></li>
+          </ul>
+        </div>
       </nav>
     </header>
-    <!-- Flash Messages -->
-    <section class="flash-messages">
-      <% flash.each do |type, message| %>
-        <div class="flash <%= type %>">
-          <%= message %>
-        </div>
-      <% end %>
-    </section>
 
-    <!-- Main Content -->
-    <main class="container">
+    <% if flash.any? %>
+      <div class="container mt-3">
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= flash_class(key) %> alert-dismissible fade show" role="alert">
+            <%= value %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="container">
       <%= yield %>
-    </main>
+    </div>
   </body>
 </html>

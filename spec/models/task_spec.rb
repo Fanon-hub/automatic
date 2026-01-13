@@ -15,6 +15,7 @@ RSpec.describe Task, type: :model do
     it 'is invalid without deadline_on' do
       task = build(:task, deadline_on: nil)
       expect(task).to be_invalid
+      expect(task.errors[:deadline_on]).to include("can't be blank")
     end
 
     it 'is invalid without priority' do

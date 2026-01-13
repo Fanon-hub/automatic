@@ -1,0 +1,46 @@
+<div class="form-group">
+  <% if form.object.respond_to?(:errors) && form.object.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <ul>
+        <% form.object.errors.full_messages.each do |msg| %>
+          <% normalized = msg.gsub("can't be blank", 'is required').gsub('Deadline on', 'Deadline') %>
+          <li><%= normalized %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= form.label :title, 'Title' %>
+    <%= form.text_field :title, class: 'form-control', id: 'task_title' %>
+  </div>
+  <div>
+    <%= form.label :content, 'Content' %>
+    <%= form.text_area :content, class: 'form-control', id: 'task_content' %>
+  </div>
+  <div>
+    <%= form.label :deadline_on, 'Deadline' %>
+    <%= form.date_field :deadline_on, class: 'form-control', id: 'task_deadline_on' %>
+  </div>
+  <div>
+    <%= form.label :priority, 'Priority' %>
+    <%= form.select :priority, Task.priorities.keys.map { |k| [t("enums.task.priority.#{k}"), k] }, { include_blank: true }, class: 'form-control', id: 'task_priority' %>
+  </div>
+  <div>
+    <%= form.label :status, 'Status' %>
+    <%= form.select :status, Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, { include_blank: true }, class: 'form-control', id: 'task_status' %>
+  </div>
+  <div>
+    <%= form.label :label_ids, 'Label' %>
+    <div>
+      <% (current_user ? current_user.labels : Label.all).each do |label| %>
+        <div class="form-check form-check-inline">
+          <%= form.check_box :label_ids, { multiple: true, checked: @task.label_ids.include?(label.id), class: 'form-check-input', id: "label_#{label.id}" }, label.id, nil %>
+          <%= form.label :label_ids, label.name, value: label.id, class: 'form-check-label', for: "label_#{label.id}" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div>
+    <%= form.submit(@task.persisted? ? 'Update' : 'Create', class: 'btn btn-primary') %>
+  </div>
+</div>

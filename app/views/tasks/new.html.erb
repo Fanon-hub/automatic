@@ -1,41 +1,5 @@
-<%= form_with model: @task do |f| %>
-  <% if @task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
-      <ul>
-        <% @task.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div>
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-  </div>
-
-  <div>
-    <%= f.label :content %>
-    <%= f.text_area :content %>
-  </div>
-
-  <div>
-    <%= f.label :deadline_on, "終了期限" %>
-    <%= f.date_field :deadline_on %>
-  </div>
-
-  <div>
-    <%= f.label :priority, "優先度" %>
-    <%= f.select :priority, Task.priorities.keys.map { |k| [t("enums.task.priority.#{k}"), k] }, include_blank: true %>
-  </div>
-
-  <div>
-    <%= f.label :status, "ステータス" %>
-    <%= f.select :status, Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, include_blank: true %>
-  </div>
-
-  <div>
-    <%= f.submit %>
-  </div>
+<h1>Task Registration</h1>
+<%= form_with(model: @task, local: true) do |form| %>
+	<%= render 'form', form: form %>
 <% end %>

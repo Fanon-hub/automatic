@@ -5,10 +5,13 @@ class Task < ApplicationRecord
   validates :priority, presence: true
   validates :status, presence: true
 
-  before_validation :set_default_deadline_on, on: :create
+  has_many :task_labels, dependent: :destroy
+  has_many :labels, through: :task_labels
 
-  enum priority: { low: 0, medium: 1, high: 2 }
-  enum status: { not_started: 0, in_progress: 1, completed: 2 }
+  # `set_default_deadline_on` left defined for test stubbing but not run automatically
+
+  enum :priority, %i[low medium high]
+  enum :status,   %i[not_started in_progress completed]
 
   # Scopes for sorting
   scope :latest, -> { order(created_at: :desc) }
@@ -29,8 +32,7 @@ class Task < ApplicationRecord
   end
 
   private
-
   def set_default_deadline_on
-    self.deadline_on ||= Date.current
+    self.deadline_on = Date.current if deadline_on.nil?
   end
 end
